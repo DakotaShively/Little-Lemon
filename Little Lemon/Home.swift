@@ -8,7 +8,10 @@
 import SwiftUI
 
 struct Home: View {
+    let persistance = PersistenceController.shared
+    
     var body: some View {
+        Text("Home Screen")
         TabView{
             Menu()
                 .tabItem{
