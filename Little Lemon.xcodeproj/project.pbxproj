@@ -18,6 +18,7 @@
 		1F59571F2A686C850003C180 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F59571D2A686C850003C180 /* Persistence.swift */; };
 		1F5957212A686E140003C180 /* MenuList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5957202A686E140003C180 /* MenuList.swift */; };
 		1F5957242A68744D0003C180 /* ExampleDatabase.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1F5957222A68744D0003C180 /* ExampleDatabase.xcdatamodeld */; };
+		1F80B4842A68A89700F812F0 /* menu.json in Resources */ = {isa = PBXBuildFile; fileRef = 1F80B4832A68A89700F812F0 /* menu.json */; };
 		1FA852D12A6881BD0073600B /* MenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA852D02A6881BD0073600B /* MenuItem.swift */; };
 /* End PBXBuildFile section */
 
@@ -34,6 +35,8 @@
 		1F59571D2A686C850003C180 /* Persistence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		1F5957202A686E140003C180 /* MenuList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuList.swift; sourceTree = "<group>"; };
 		1F5957232A68744D0003C180 /* ExampleDatabase.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ExampleDatabase.xcdatamodel; sourceTree = "<group>"; };
+		1F80B4832A68A89700F812F0 /* menu.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = menu.json; sourceTree = "<group>"; };
+		1FA71AF02A6C81E000776378 /* Little-Lemon-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Little-Lemon-Info.plist"; sourceTree = SOURCE_ROOT; };
 		1FA852D02A6881BD0073600B /* MenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -68,6 +71,7 @@
 		1F5957052A65C4C30003C180 /* Little Lemon */ = {
 			isa = PBXGroup;
 			children = (
+				1FA71AF02A6C81E000776378 /* Little-Lemon-Info.plist */,
 				1F5957062A65C4C30003C180 /* Little_LemonApp.swift */,
 				1F5957142A65C5790003C180 /* Onboarding.swift */,
 				1F5957162A65CCC60003C180 /* Home.swift */,
@@ -79,6 +83,7 @@
 				1F5957202A686E140003C180 /* MenuList.swift */,
 				1FA852D02A6881BD0073600B /* MenuItem.swift */,
 				1F5957222A68744D0003C180 /* ExampleDatabase.xcdatamodeld */,
+				1F80B4832A68A89700F812F0 /* menu.json */,
 			);
 			path = "Little Lemon";
 			sourceTree = "<group>";
@@ -149,6 +154,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1F80B4842A68A89700F812F0 /* menu.json in Resources */,
 				1F59570E2A65C4C40003C180 /* Preview Assets.xcassets in Resources */,
 				1F59570B2A65C4C40003C180 /* Assets.xcassets in Resources */,
 			);
@@ -301,6 +307,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Little Lemon/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Little-Lemon-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -329,6 +336,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Little Lemon/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Little-Lemon-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

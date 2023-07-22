@@ -1,92 +1,75 @@
+import Foundation
 import SwiftUI
+import CoreData
 
 struct Menu: View {
     @Environment(\.managedObjectContext) private var viewContext
-    @FetchRequest(sortDescriptors: buildSortDescriptors()) var dishes: FetchedResults<Dish>
+    @FetchRequest(entity: Dish.entity(), sortDescriptors: []) var dishes: FetchedResults<Dish>
     
-    @State private var dataFetched = false
-    @State private var searchText = ""
-    
-    static func buildSortDescriptors() -> [NSSortDescriptor] {
+    func getMenuData() {
+        let serverURLString = "https://raw.githubusercontent.com/Meta-Mobile-Developer-PC/Working-With-Data-API/main/menu.json"
         
-        return [NSSortDescriptor(key: "title", ascending: true, selector: #selector(NSString.localizedStandardCompare))]
-    }
-    
+        guard let url = URL(string: serverURLString) else {
+            print("Invalid server URL")
+            return
+        }
+        
+        let request = URLRequest(url: url)
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data = data else {
+                print("Error fetching data: \(error?.localizedDescription ?? "Unknown error")")
+                return
+            }
+            
+            // Parse the data into models using JSONDecoder
+            do {
+                let menuList = try JSONDecoder().decode(MenuList.self, from: data)
+                let context = PersistenceController.shared.container.viewContext
+                
+                // Clear the database before saving new data
+                PersistenceController.shared.clear()
+                
+                for menuItem in menuList.menu {
+                    let dish = Dish(context: context)
+                    dish.title = menuItem.title
+                    dish.image = menuItem.image
+                    dish.price = menuItem.price
+                }
+                
+                try context.save()
+            } catch {
+                print("Error decoding data: \(error.localizedDescription)")
+            }
+        }.resume()}
     
     var body: some View {
         VStack {
-            TextField("Search menu", text: $searchText)
-                .padding()
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .onChange(of: searchText) { newValue in
-                    // Perform search logic here (if needed)
-                }
-            
-            Text("VStack works")
-            
-            
-            if dataFetched {
-                Text("2")
-                List {
-                    ForEach(dishes) { dish in
-                        HStack {
-                            if let title = dish.title, let price = dish.price, let image = dish.image {
-                                Text("\(title) - \(price) - \(image)")
-                            } else {
-                                Text("No title or price available")
-                            }
+            List(dishes) { dish in
+                HStack {
+                    Text("The dish, \(dish.title ?? "Title") is created")
+                    AsyncImage(url: URL(string: dish.image ?? "")) { phase in
+                        switch phase {
+                        case .success(let image):
+                            image
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 50, height: 50)
+                        default:
+                            ProgressView()
                         }
                     }
+                    .frame(width: 50, height: 50)
                 }
-            } else {
-                Text("Fetch Isn't Working")
             }
         }
         .onAppear {
-            if !dataFetched {
-                getMenuData()
-            }
+            getMenuData()
         }
     }
-    
-    func getMenuData() {
-        PersistenceController.shared.clear()
-        let serverURLString = "https://raw.githubusercontent.com/Meta-Mobile-Developer-PC/Working-With-Data-API/main/menu.json"
-        let serverURL = URL(string: serverURLString)!
-        
-        let urlRequest = URLRequest(url: serverURL)
-        
-        let task = URLSession.shared.dataTask(with: urlRequest) { data, response, error in
-            DispatchQueue.main.async {
-                if let data = data {
-                    do {
-                        let decoder = JSONDecoder()
-                        let decodedData = try decoder.decode(MenuList.self, from: data)
-                        let menuItems = decodedData.menu
-                        
-                        for item in menuItems {
-                            let dish = Dish(context: viewContext)
-                            dish.title = item.title
-                            dish.image = item.image
-                            dish.price = item.price
-                        }
-                        
-                        try? viewContext.save()
-                        dataFetched = true
-                        print("Data fetched and saved successfully.")
-                    } catch {
-                        print("Error decoding the response data: \(error)")
-                    }
-                } else if let error = error {
-                    print("Error: \(error)")
-                }
-            }
-        }
-        
-        task.resume()
-    }
-    
 }
+
+
 
 struct Menu_Previews: PreviewProvider {
     static var previews: some View {

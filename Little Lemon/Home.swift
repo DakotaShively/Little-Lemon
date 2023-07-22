@@ -6,22 +6,27 @@
 //
 
 import SwiftUI
+import Foundation
+import CoreData
+
 
 struct Home: View {
-    let persistance = PersistenceController.shared
+    
     
     var body: some View {
-        Text("Home Screen")
+        let persistance = PersistenceController.shared
         TabView{
-            Menu()
-                .tabItem{
-                    Label("Menu", systemImage: "list.dash")
-                }
             UserProfile()
                 .tabItem{
                     Label("Profile", systemImage: "square.and.pencil")
                 }
                 .navigationBarBackButtonHidden(true)
+            Menu()
+                
+                .tabItem{
+                    Label("Menu", systemImage: "list.dash")
+                }
+            
         }
     }
 }
